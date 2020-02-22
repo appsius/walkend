@@ -72,9 +72,9 @@ stepThroughCell = (row, column) => {
   // Randomly ordered list of neighbors
   const neighbors = shuffle([
     [row - 1, column, 'up'],
-    [row, column + 1, 'right'],
-    [row + 1, column, 'down'],
-    [row, column - 1, 'left']
+    [(row, column + 1, 'right')],
+    [(row + 1, column, 'down')],
+    [(row, column - 1, 'left')]
   ]);
 
   // For each neighbor ....
@@ -97,7 +97,16 @@ stepThroughCell = (row, column) => {
     }
 
     // Remove the wall horizontally or vertically
+    if (direction === 'left') {
+      verticals[row][column - 1] = true;
+    } else if (direction === 'right') {
+      verticals[row][column] = true;
+    } else if (direction === 'up') {
+      horizontals[row - 1][column] = true;
+    } else if (direction === 'down') {
+      horizontals[row][column] = true;
+    }
   }
 };
 
-stepThroughCell(1, 1);
+stepThroughCell(startRow, startColumn);
