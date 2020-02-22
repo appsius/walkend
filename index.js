@@ -1,5 +1,4 @@
 const { Engine, Render, Runner, World, Bodies } = Matter;
-
 const cells = 3;
 const width = 600;
 const height = 600;
@@ -29,7 +28,6 @@ const walls = [
 World.add(world, walls);
 
 // Maze Generation
-
 const shuffle = arr => {
   let counter = arr.length;
 
@@ -62,7 +60,7 @@ const startColumn = Math.floor(Math.random() * cells);
 
 stepThroughCell = (row, column) => {
   // If I visited the cell [row, column], then return
-  if (grid[row][column] === true) {
+  if (grid[row][column]) {
     return;
   }
 
@@ -72,9 +70,9 @@ stepThroughCell = (row, column) => {
   // Randomly ordered list of neighbors
   const neighbors = shuffle([
     [row - 1, column, 'up'],
-    [(row, column + 1, 'right')],
-    [(row + 1, column, 'down')],
-    [(row, column - 1, 'left')]
+    [row, column + 1, 'right'],
+    [row + 1, column, 'down'],
+    [row, column - 1, 'left']
   ]);
 
   // For each neighbor ....
@@ -106,7 +104,19 @@ stepThroughCell = (row, column) => {
     } else if (direction === 'down') {
       horizontals[row][column] = true;
     }
+
+    stepThroughCell(nextRow, nextColumn);
   }
 };
 
 stepThroughCell(startRow, startColumn);
+
+horizontals.forEach(row => {
+  row.forEach(open => {
+    if (open) {
+      return;
+    }
+
+    const wall = Bodies.rectangle();
+  });
+});
