@@ -44,6 +44,23 @@ const horizontals = Array(cells - 1)
 const startRow = Math.floor(Math.random() * cells);
 const startColumn = Math.floor(Math.random() * cells);
 
-stepThroughCells = (startRow, startColumn) => {};
+stepThroughCell = (row, column) => {
+  // If I visited the cell [row, column], then return
+  if (grid[row][column] === true) {
+    return;
+  }
 
-stepThroughCells(startRow, startColumn);
+  // Mark this cell as visited
+  grid[row][column] = true;
+
+  // Randomly ordered list of neighbors
+  const neighbors = [
+    [row - 1, column],
+    [row, column + 1],
+    [row + 1, column],
+    [row, column - 1]
+  ];
+};
+
+stepThroughCell(startRow, startColumn);
+console.log(grid);
